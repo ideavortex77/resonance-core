@@ -113,7 +113,6 @@
                             </div>
                         </div>
                     </div>
-                    <a href="#comments" class="nav-link px-4 py-2 text-slate-600 hover:text-slate-900">Comments</a>
                 </div>
 
                 <div class="flex items-center gap-x-3">
@@ -122,11 +121,6 @@
                         <i class="fa-brands fa-github"></i>
                         <span>Contribute</span>
                     </a>
-                    <button onclick="document.getElementById('comments').scrollIntoView({ behavior: 'smooth' })" 
-                            class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold rounded-3xl transition-all flex items-center gap-x-2">
-                        <i class="fa-solid fa-comments"></i>
-                        <span>Join Discussion</span>
-                    </button>
                 </div>
             </div>
         </div>
@@ -152,10 +146,6 @@
                         class="px-8 h-14 rounded-3xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold flex items-center gap-x-3 text-lg transition-all">
                     Start Reading the 10 Sections
                     <i class="fa-solid fa-arrow-right"></i>
-                </button>
-                <button onclick="document.getElementById('comments').scrollIntoView({ behavior: 'smooth' })" 
-                        class="px-8 h-14 rounded-3xl border border-slate-300 hover:bg-white font-semibold flex items-center gap-x-3 text-lg transition-colors">
-                    Leave a Comment
                 </button>
             </div>
             
@@ -583,8 +573,15 @@
             
             <p class="mt-4">This counter-intuitive improvement is one of the key drivers of the exponential/asymptotic scaling law. Larger volume gives the plasma more room to form a smoother, more stable density gradient.</p>
             
-            <h4 id="advanced-refinement" class="font-semibold mt-6">Advanced Refinement: Heavier Ion Injection for Gradient Control <sup class="text-indigo-600">*</sup></h4>
-            <p>Trace amounts of heavier ions can be periodically introduced into the plasma (for example through vaporization or ion injection). These ions act as a controllable mechanism to help form, sharpen, or stabilize the critical density gradient at the overdense plasma mirror edge, improving the performance and reliability of microwave recirculation. Magnesium is one suitable example, though other heavier ions may also be used.</p>
+            <h4 class="font-semibold mt-6">Density Profile Control Strategy</h4>
+            <p>A known challenge in magnetically confined plasmas is the natural tendency for cross-field transport to produce centrally peaked or flat density profiles. To achieve and maintain the desired hollow profile (lower density in the core, higher density at the edge) required for effective microwave reflection, the Neon Plasma Mirror PoC will employ a multi-pronged approach. Plasma will be preferentially created at the edge through magnetic induction using auxiliary shell loops, reinforced by edge-localized helicon antennas for efficient high-density edge plasma production. Periodic nitrogen seeding via short, timed gas puffs will then be introduced to increase collisionality and provide radiative cooling, helping to sharpen and stabilize the density gradient in the transition region. This staged approach — first building edge density with induction and helicon sources, followed by impurity seeding for fine-tuning — is intended to counteract natural transport effects while maintaining an underdense core suitable for microwave propagation and recirculation.</p>
+            
+            <h4 class="font-semibold mt-6">Seeding Strategy for Density Gradient Control</h4>
+            <p>Periodic nitrogen seeding will be used as a supporting technique to help establish and maintain the desired hollow density profile. Short, timed gas puffs of nitrogen will be introduced via a solenoid valve, synchronized with the edge plasma sources. The goal is to increase collisionality and provide localized radiative cooling near the edge without significant core contamination.</p>
+            
+            <p>This approach draws from well-established impurity seeding techniques used in magnetic confinement experiments, where controlled introduction of nitrogen has been shown to modify edge transport and help create steeper density gradients. In the Neon Plasma Mirror PoC, seeding will be applied after initial edge density buildup from magnetic induction and helicon antenna operation, allowing the nitrogen to act primarily as a fine-tuning mechanism rather than the primary source of edge plasma.</p>
+            
+            <p>Low impurity concentrations (well below 1%) will be targeted, with real-time monitoring via optical emission spectroscopy and density profile diagnostics to ensure the underdense core remains suitable for microwave propagation while the overdense edge is reinforced for plasma-mirror reflection.</p>
             
             <p class="mt-4 italic">The Resonance Core architecture is unique in that it deliberately emulates the natural hydrostatic equilibrium found inside stars — inward compressive forces balanced by outward plasma pressure — without relying on gravity. This suggests the system may exhibit significantly different (and potentially more stable) behavior in microgravity environments, where the unwanted effects of planetary gravity are absent.</p>
         </div>
@@ -645,37 +642,6 @@
                 <p class="font-medium">– Q1 Abundance LLC</p>
                 <p class="text-indigo-600">q1abundancellc@gmail.com</p>
             </div>
-        </div>
-    </section>
-
-    <!-- COMMENTS SECTION -->
-    <section id="comments" class="max-w-screen-2xl mx-auto px-8 py-20 border-t bg-slate-900 text-white">
-        <div class="max-w-3xl mx-auto text-center">
-            <h2 class="text-4xl font-semibold heading-font tracking-tight">Community Discussion &amp; Comments</h2>
-            <p class="mt-4 text-slate-300">This is an open science project. Share your thoughts, questions, suggestions, or offers to collaborate on any section.</p>
-        </div>
-        
-        <div class="max-w-3xl mx-auto mt-10">
-            <!-- Giscus Comments Embed -->
-            <div class="bg-slate-800 rounded-3xl p-8">
-                <p class="text-center text-slate-400 mb-6">Comments powered by Giscus (GitHub Discussions)</p>
-                
-                <div id="giscus-container">
-                    <!-- Giscus will be loaded here -->
-                    <div class="text-center py-8">
-                        <p class="text-sm text-slate-400">To enable live comments:</p>
-                        <ol class="text-left text-sm text-slate-300 mt-4 space-y-1 max-w-xs mx-auto">
-                            <li>1. Create a public GitHub repository</li>
-                            <li>2. Enable Discussions in repo settings</li>
-                            <li>3. Install Giscus app on your repo</li>
-                            <li>4. Replace the script below with your Giscus config</li>
-                        </ol>
-                        <p class="mt-4 text-xs text-slate-500">I can help you set this up in under 5 minutes.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <p class="text-center text-xs text-slate-400 mt-4">All comments are public and hosted on GitHub. Be respectful and constructive.</p>
         </div>
     </section>
 
@@ -748,41 +714,15 @@
             });
         }
         
-        // Keyboard shortcut: press "?" to jump to comments
-        function initKeyboard() {
-            document.addEventListener('keydown', function(e) {
-                if (e.key === "?" && document.activeElement.tagName === "BODY") {
-                    e.preventDefault();
-                    document.getElementById('comments').scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        }
-        
         function init() {
             initTailwind();
             renderMath();
             initNavHighlight();
-            initKeyboard();
             
             console.log('%c[Resonance Core] Website ready. All 10 sections loaded with exact text and formatted equations.', 'color: #64748b');
         }
         
         window.onload = init;
     </script>
-<script src="https://giscus.app/client.js"
-        data-repo="ideavortex77/resonance-core"
-        data-repo-id="R_kgDOStLFiA"
-        data-category="Announcements"
-        data-category-id="DIC_kwDOStLFiM4C-OZe"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="0"
-        data-input-position="bottom"
-        data-theme="preferred_color_scheme"
-        data-lang="en"
-        crossorigin="anonymous"
-        async>
-</script>
 </body>
 </html>
