@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resonance Core • Microwave Recycling System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- KaTeX for beautiful equations -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-font {
+            font-family: 'Space Grotesk', 'Inter', sans-serif;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+        }
+
+        .section {
+            scroll-margin-top: 90px;
+        }
+
+        .nav-link {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-link:hover, .nav-link.active {
+            color: #6366f1;
+        }
+
+        .math {
+            font-size: 1.05em;
+        }
+
+        .doc-text {
+            font-size: 1.02rem;
+            line-height: 1.75;
+        }
+
+        .doc-text h3, .doc-text h4 {
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #1e2937;
+        }
+
+        .section-header {
+            position: sticky;
+            top: 72px;
+            background: white;
+            z-index: 40;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .plasma-bg {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1135 100%);
+        }
+
+        .nav-active {
+            background-color: #6366f120;
+            color: #6366f1;
+            border-radius: 9999px;
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <!-- NAVBAR -->
+    <nav class="bg-white border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto">
+            <div class="px-8 py-5 flex items-center justify-between">
+                <div class="flex items-center gap-x-4">
+                    <div class="flex items-center gap-x-3">
+                        <div class="w-10 h-10 bg-indigo-600 rounded-2xl flex items-center justify-center">
+                            <i class="fa-solid fa-atom text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <span class="font-semibold text-2xl tracking-tighter heading-font">Resonance Core</span>
+                        </div>
+                    </div>
+                    <div class="hidden md:block text-xs px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full font-medium">Open Science • Plasma Physics</div>
+                </div>
+
+                <!-- Desktop Nav -->
+                <div class="hidden lg:flex items-center gap-x-2 text-sm font-medium">
+                    <a href="#hero" class="nav-link px-4 py-2 text-slate-600 hover:text-slate-900">Overview</a>
+                    <div class="relative group">
+                        <button class="nav-link px-4 py-2 text-slate-600 hover:text-slate-900 flex items-center gap-x-1">
+                            The 10 Sections <i class="fa-solid fa-chevron-down text-xs ml-1"></i>
+                        </button>
+                        <div class="absolute hidden group-hover:block pt-2 w-72">
+                            <div class="bg-white shadow-xl border border-slate-200 rounded-3xl py-2 text-sm">
+                                <a href="#section-1" class="block px-5 py-2 hover:bg-slate-50">1. Safety &amp; Requirements</a>
+                                <a href="#section-2" class="block px-5 py-2 hover:bg-slate-50">2. Executive Summary</a>
+                                <a href="#section-3" class="block px-5 py-2 hover:bg-slate-50">3. Technical Description</a>
+                                <a href="#section-4" class="block px-5 py-2 hover:bg-slate-50">4. Neon Proof of Concept</a>
+                                <a href="#section-5-new" class="block px-5 py-2 hover:bg-slate-50">5. Microwave Recycling via Plasma Gradients</a>
+                                <a href="#section-6" class="block px-5 py-2 hover:bg-slate-50">6. Neon PoC Laboratory Protocol</a>
+                                <a href="#section-7" class="block px-5 py-2 hover:bg-slate-50">7. FAQ 1: Microwave Polarization</a>
+                                <a href="#section-8" class="block px-5 py-2 hover:bg-slate-50">8. FAQ 2: Magnetic Configuration</a>
+                                <a href="#section-9" class="block px-5 py-2 hover:bg-slate-50">9. FAQ 3: Dipole Volume Scaling</a>
+                                <a href="#section-faq2" class="block px-5 py-2 hover:bg-slate-50">10. FAQ 4: Scaling Arguments</a>
+                                <a href="#section-faq3" class="block px-5 py-2 hover:bg-slate-50">11. FAQ 5: Magnetic Geometry</a>
+                                <a href="#section-10" class="block px-5 py-2 hover:bg-slate-50">12. Project Vision</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-x-3">
+                    <a href="https://github.com" target="_blank" 
+                       class="hidden md:inline-flex items-center gap-x-2 px-5 py-2 text-sm font-medium rounded-3xl border border-slate-300 hover:bg-slate-100 transition-colors">
+                        <i class="fa-brands fa-github"></i>
+                        <span>Contribute</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO / OVERVIEW -->
+    <section id="hero" class="max-w-screen-2xl mx-auto px-8 pt-16 pb-12">
+        <div class="max-w-4xl">
+            <div class="inline-flex items-center gap-x-2 px-4 py-1.5 rounded-3xl bg-emerald-100 text-emerald-700 text-sm font-medium mb-6">
+                <i class="fa-solid fa-flask"></i>
+                <span>Open Research Project • Exact Document Preserved</span>
+            </div>
+            
+            <h1 class="text-6xl md:text-7xl leading-none tracking-tighter font-semibold heading-font">
+                Resonance Core
+            </h1>
+            <p class="mt-4 text-2xl text-slate-600 max-w-2xl">
+                Microwave Recycling System Using Gradient Density Plasma and Magneto Optics
+            </p>
+            
+           
+            
+            <div class="mt-8 text-sm text-slate-500 flex items-center gap-x-6">
+                <div class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-shield-halved text-emerald-600"></i>
+                    <span>Safety protocols included</span>
+                </div>
+                <div>Exact wording preserved • All equations formatted</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SAFETY BANNER -->
+    <div class="bg-amber-50 border-y border-amber-200 py-4">
+        <div class="max-w-screen-2xl mx-auto px-8 text-sm flex items-start gap-x-3 text-amber-800">
+            <i class="fa-solid fa-exclamation-triangle mt-0.5"></i>
+            <div>
+                <strong>Important:</strong> These experiments involve high-voltage systems, microwave radiation, vacuum systems, and plasma generation. 
+                They must only be performed by qualified personnel in a properly equipped laboratory environment with appropriate safety measures, shielding, and regulatory compliance.
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 1 -->
+    <section id="section-1" class="max-w-screen-2xl mx-auto px-8 py-16 border-t section">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <span class="text-xs font-mono tracking-[3px] text-indigo-600">SECTION 01 / 13</span>
+                <h2 class="text-4xl font-semibold heading-font tracking-tight">Safety and Experimental Requirements</h2>
+            </div>
+            <a href="#section-2" class="hidden md:flex items-center gap-x-2 text-sm font-medium text-indigo-600 hover:text-indigo-700">
+                Next <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="doc-text max-w-4xl prose prose-slate">
+            <p>These experiments involve high-voltage systems, microwave radiation, vacuum systems, and plasma generation. They must only be performed by qualified personnel in a properly equipped laboratory environment with appropriate safety measures, shielding, and regulatory compliance.</p>
+            
+            <p>Detailed safety protocols and risk assessments are available upon request to qualified research institutions.</p>
+        </div>
+        
+        <div class="mt-8 flex gap-3">
+            <a href="#section-2" class="px-6 py-2.5 text-sm font-medium rounded-2xl border border-slate-300 hover:bg-white flex items-center gap-x-2">Next: Executive Summary <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- SECTION 2: Executive Summary -->
+    <section id="section-2" class="max-w-screen-2xl mx-auto px-8 py-16 border-t bg-white section">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <span class="text-xs font-mono tracking-[3px] text-indigo-600">SECTION 02 / 13</span>
+                <h2 class="text-4xl font-semibold heading-font tracking-tight">Executive Summary</h2>
+            </div>
+            <a href="#section-3" class="hidden md:flex items-center gap-x-2 text-sm font-medium text-indigo-600 hover:text-indigo-700">
+                Next <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+        
+        <div class="doc-text max-w-4xl">
+            <h3 class="font-semibold text-2xl mb-4">Resonance Core: Microwave Recycling System Using Gradient Density Plasma and Magneto Optics</h3>
+            
+            <p>The Resonance Core explores a plasma-based approach to microwave heating in fusion-relevant conditions. It uses a levitated dipole magnetic bottle configuration with controlled radial density gradients — an underdense central region surrounded by overdense edge layers — to form an internal “plasma mirror.” This boundary is intended to reflect and recirculate injected microwaves through the plasma volume using plasma-frequency cutoff reflection, Faraday rotation, and Cotton-Mouton birefringence.</p>
+            
+            <p>This dynamic plasma boundary is designed to reduce losses compared to physical walls or antennas, potentially allowing improved recirculation.</p>
+            
+            <h4 class="font-semibold mt-8 mb-3">Key Features</h4>
+            <ul class="list-disc pl-6 space-y-1">
+                <li>Combines established plasma physics phenomena (density gradients, wave-plasma interactions, magnetic confinement) in one architecture.</li>
+                <li>Intended to be scalable in principle from benchtop experiments to larger systems.</li>
+                <li>Designed for construction with standard laboratory components and techniques.</li>
+            </ul>
+            
+            <h4 class="font-semibold mt-8 mb-3">Development Roadmap</h4>
+            <p>The immediate priority is a modest Neon Plasma Mirror Proof-of-Concept device (30–90 cm scale). This low-risk test uses stable neon plasmas at 2.45 GHz to examine microwave recirculation physics without fusion fuels or extreme conditions. Key metrics include measurable Q-factor improvement over an empty cavity, repeatable density gradient formation (L_n ≈ 1–2 cm), and reflection performance.</p>
+            
+            <p>Positive results would provide data on the core concept and support further development toward a fusion-conditions prototype.</p>
+            
+            <p>This concept is intended to explore a potential contribution to plasma heating methods, with possible relevance to fusion research, industrial plasmas, and related applications. Full details, experimental plans, and notes follow.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 3: Technical Description -->
+    <section id="section-3" class="max-w-screen-2xl mx-auto px-8 py-16 border-t section">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <span class="text-xs font-mono tracking-[3px] text-indigo-600">SECTION 03 / 13</span>
+                <h2 class="text-4xl font-semibold heading-font tracking-tight">Technical Description</h2>
+            </div>
+        </div>
+        
+        <div class="doc-text max-w-4xl space-y-6">
+            <div>
+                <h3 class="font-semibold text-xl">Title</h3>
+                <p>Resonance Core: Microwave Recycling System Using Plasma Density-Gradient Magnetic Bottles</p>
+            </div>
+            
+            <div>
+                <h3 class="font-semibold text-xl">Field</h3>
+                <p>This invention relates to plasma physics and magnetic confinement techniques, with possible applications in fusion research, energy systems, propulsion concepts, and industrial plasma processes.</p>
+            </div>
+            
+            <div>
+                <h3 class="font-semibold text-xl">Background</h3>
+                <p>Magnetic confinement fusion systems require substantial auxiliary heating power to reach and sustain fusion conditions. Conventional microwave heating methods suffer from limited efficiency due to single-pass absorption or losses at material walls. Physical mirrors and resonant cavities add complexity, suffer from erosion and neutron damage, and increase system cost. A high-efficiency microwave recycling system that multiplies the effect of externally launched power without relying on solid mirrors or cavity walls is needed.</p>
+            </div>
+            
+            <div>
+                <h3 class="font-semibold text-xl">Summary</h3>
+                <p>The present project, referred to as the Resonance Core, provides a microwave recycling system within a magnetic bottle configuration. Engineered electron density gradients — an underdense core surrounded by overdense edge layers — enable the plasma itself to act as both a propagating medium and a high-efficiency reflector without physical mirrors or walls.</p>
+                
+                <p>Microwaves in the 2.45–10 GHz range are supplied externally. After initial ignition by an external microwave pulse, the externally launched microwaves undergo Faraday rotation and Cotton-Mouton birefringence during propagation through the underdense core and are reflected at the plasma-frequency cutoff in the overdense edge layers. This recirculation enables multiple passes of the microwave energy within the magnetic bottle, with Q-factors to be quantified experimentally, and serves as an efficiency multiplier for auxiliary heating, thrust vectoring, or beamed power applications.</p>
+                
+                <p>A laboratory-scale embodiment (30–90 cm magnetic bottle) is feasible today to demonstrate the recycling mechanism, measure reflectivity and polarization effects, and quantify the achieved Q-factor. The laboratory demonstration is too small to sustain fusion conditions; it serves solely as a proof-of-concept. The same principles are directly scalable to larger magnetic bottle embodiments for enhanced performance in fusion systems.</p>
+            </div>
+            
+            <div>
+                <h3 class="font-semibold text-xl">Detailed Description</h3>
+                <p>The Resonance Core operates by simultaneously harnessing three established plasma-physics effects inside a magnetic bottle:</p>
+                
+                <ul class="list-disc pl-6 mt-3 space-y-2">
+                    <li><strong>Faraday rotation</strong> of the polarization plane, given by 
+                        <span class="math">θ = V B∥ L</span></li>
+                    <li><strong>Cotton-Mouton birefringence</strong> producing a phase delay between ordinary (O) and extraordinary (X) modes, 
+                        <span class="math">Δn ∝ B⊥²</span></li>
+                    <li><strong>Plasma mirror cutoff reflection</strong> when the microwave frequency ω is below the local plasma frequency ωp at the engineered overdense edge layers<br>
+                        <span class="math">ωp ≈ 5.6415 × 10¹ √n_e</span> rad/s (n_e in m⁻³)<br>
+                        or equivalently <span class="math">ωp ≈ 5.6415 × 10⁴ √n_e</span> rad/s (n_e in cm⁻³)</li>
+                </ul>
+                
+                <!-- Visuals: Density Gradient & Wave Physics -->
+                <div class="my-8 grid md:grid-cols-2 gap-8">
+                    <!-- Density Gradient -->
+                    <figure>
+                        <img src="images/density-gradient-cutoff.jpg" 
+                             alt="Radial electron density profile and plasma frequency cutoff. The engineered gradient (Lₙ ≈ 1–2 cm) creates an underdense core (transparent) and overdense edge where microwaves reflect at the plasma frequency cutoff layer." 
+                             class="w-full rounded-2xl shadow-lg border border-slate-200">
+                        <figcaption class="mt-3 text-sm text-slate-600 italic">
+                            Radial electron density profile and plasma frequency cutoff. The engineered gradient (Lₙ ≈ 1–2 cm) creates an underdense core (transparent) and overdense edge where microwaves reflect at the plasma frequency cutoff layer.
+                        </figcaption>
+                    </figure>
+                    
+                    <!-- Wave Physics -->
+                    <figure>
+                        <img src="images/wave-physics-recirculation.jpg" 
+                             alt="Microwave propagation in the Resonance Core. Waves traveling through the magnetized underdense plasma undergo Faraday rotation and Cotton-Mouton birefringence before reflecting at the overdense plasma cutoff layer, enabling recirculation." 
+                             class="w-full rounded-2xl shadow-lg border border-slate-200">
+                        <figcaption class="mt-3 text-sm text-slate-600 italic">
+                            Microwave propagation in the Resonance Core. Waves traveling through the magnetized underdense plasma undergo Faraday rotation and Cotton-Mouton birefringence before reflecting at the overdense plasma cutoff layer, enabling recirculation.
+                        </figcaption>
+                    </figure>
+                </div>
+                
+                <p class="mt-4">The microwaves are launched externally (e.g., from gyrotrons or magnetrons). In the chosen microwave band, the core plasma remains underdense and transparent, while the edge layers are overdense. Density gradients are created and controlled using helicon or ECR sources (target densities 10¹⁶–10¹⁹ m⁻³). The full Appleton-Hartree dispersion relation governs propagation, but the O-mode cutoff at ωp provides a reliable working approximation, routinely yielding high reflectivity as demonstrated in tokamak reflectometry and laboratory plasma mirror experiments.</p>
+                
+                <p>The system allows repeated recirculation of the externally launched microwave energy inside the magnetic bottle. This yields a resonant system that multiplies input power without material interfaces inside the plasma volume. Preferred fuel for fusion applications is D-He³ (aneutronic), though the recycling mechanism applies to any magnetically confined plasma.</p>
+            </div>
+            
+            <div>
+                <h3 class="font-semibold text-xl">Lab-Scale Demonstration</h3>
+                <p>A small-scale laboratory demonstration is feasible today with a 30–90 cm spherical magnetic bottle (levitated-dipole configuration, B = 0.1–2 T), standard helicon or ECR sources for density control (including edge-localized helicon antennas to engineer and maintain the required hollow density profile against natural central peaking), and off-the-shelf 2.45 or 10 GHz equipment with polarimetry and reflectometry diagnostics. Density can be swept across cutoff while measuring combined reflectivity, Faraday rotation, and Cotton-Mouton shifts to quantify the achieved Q-factor and validate the recycling mechanism. This demonstration proves the core concept but is too small to sustain fusion conditions.</p>
+            </div>
+            
+            <div>
+                <h3 class="font-semibold text-xl">Advantages</h3>
+                <ul class="list-disc pl-6">
+                    <li>Has the potential to reduce auxiliary power requirements for fusion ignition and sustainment in scaled systems.</li>
+                    <li>Eliminates physical mirror erosion and neutron damage issues.</li>
+                    <li>Enables more compact magnetic bottle designs.</li>
+                    <li>Provides a practical efficiency multiplier using only established plasma and microwave techniques.</li>
+                </ul>
+            </div>
+            
+            <div>
+                <h3 class="font-semibold text-xl">Enablement</h3>
+                <p>The invention is fully enableable by a person of ordinary skill in plasma physics and microwave engineering. All components (magnetic bottles, density control via helicon/ECR, microwave sources, and diagnostics) are commercially available or routinely implemented in existing fusion research facilities. Gradient profiles and ray-tracing details sufficient for construction are known in the art or can be readily developed.</p>
+            </div>
+            
+            <div>
+                <h3 class="font-semibold text-xl">Abstract</h3>
+                <p>The present concept provides a microwave recycling system for achieving and sustaining fusion-relevant plasma conditions with substantially reduced input energy requirements. The system comprises a containment vessel defining a reaction volume, a central magnetic dipole, and a magnetized gas configured to form a plasma having a controlled density gradient within the reaction volume. Microwave energy introduced into the reaction volume is efficiently reflected and recirculated by the plasma density gradient and magnetic field, creating a reflective plasma boundary that confines and recycles the microwave energy within the central region.</p>
+                
+                <p>The architecture enables high-efficiency energy recirculation while maintaining plasma stability, offering a scalable approach suitable for laboratory validation as well as larger embodiments. Methods of operating the system and various alternative configurations are also disclosed.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: Neon Proof of Concept -->
+    <section id="section-4" class="max-w-screen-2xl mx-auto px-8 py-16 border-t bg-white section">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <span class="text-xs font-mono tracking-[3px] text-indigo-600">SECTION 04 / 13</span>
+                <h2 class="text-4xl font-semibold heading-font tracking-tight">Neon Proof of Concept</h2>
+            </div>
+        </div>
+        
+        <div class="doc-text max-w-4xl">
+            <h3 class="font-semibold text-xl">Neon Plasma Mirror Proof-of-Concept</h3>
+            
+            <p>The Neon Plasma Mirror Proof-of-Concept is a laboratory-scale experiment intended to test whether microwave energy can be reflected and recycled using a controlled plasma density gradient inside a magnetic bottle. The basic concept relies on creating a radial density profile consisting of an underdense core surrounded by an overdense edge layer. In this configuration, microwaves launched into the underdense region can propagate while experiencing Faraday rotation and Cotton-Mouton birefringence, and reflect at the overdense edge through plasma-frequency cutoff. The objective is to demonstrate that this plasma mirror effect can retain microwave energy within the system over multiple passes.</p>
+            
+            <p>A primary technical challenge is establishing and maintaining the required hollow density profile. Cross-field transport in magnetized plasmas tends to drive central density peaking, which would reduce the effectiveness of the plasma mirror. To address this, the experiment will use a combined approach to actively control the radial density gradient. Edge-localized helicon antennas will serve as the primary method for generating high-density plasma near the chamber boundary. Magnetic induction through auxiliary shell coils will provide supporting assistance for edge plasma formation and field shaping. Biased electrodes or limiters positioned near the edge may be employed to generate localized flow shear, which can help suppress turbulence and improve edge transport properties. Periodic impurity seeding using nitrogen or neon via short, timed gas puffs will be introduced as a refinement tool to increase collisionality and help sharpen the density gradient in the transition region.</p>
+            
+            <p>The Neon PoC has several primary objectives: to form a stable plasma with a measurable radial density gradient, to demonstrate a significant reduction in reflected microwave power once the overdense edge engages as a reflecting layer, and to show that the combination of edge sources and gradient control techniques can counteract central peaking to a useful degree. While high-efficiency, multi-pass microwave recirculation is not expected at this small scale, a clear demonstration of reduced reflected power together with active density profile control would constitute a meaningful validation of the core physics principles and provide a foundation for further development at larger scales.</p>
+            
+            <p>Success at the laboratory level would indicate that engineered plasma density gradients can be used to influence microwave propagation and reflection in a magnetic bottle, opening a path toward more efficient microwave energy management in future systems.</p>
+        </div>
+    </section>
+
+    <!-- NEW SECTION 5: Microwave Recycling via Engineered Plasma Density Gradients -->
+    <section id="section-5-new" class="max-w-screen-2xl mx-auto px-8 py-16 border-t bg-white section">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <span class="text-xs font-mono tracking-[3px] text-indigo-600">SECTION 05 / 13</span>
+                <h2 class="text-4xl font-semibold heading-font tracking-tight">Microwave Recycling via Engineered Plasma Density Gradients</h2>
+            </div>
+        </div>
+        
+        <div class="doc-text max-w-4xl">
+            <p>The central physics principle of the Resonance Core is the use of a controlled radial plasma density gradient to enable efficient reflection and recirculation of microwave energy without physical mirrors or walls.</p>
+            
+            <p>In the proposed configuration, an underdense core (where the plasma frequency is below the microwave frequency) is surrounded by an overdense edge layer (where the plasma frequency exceeds the microwave frequency). Microwaves launched into the underdense core can propagate through the magnetized plasma, undergoing Faraday rotation (due to the parallel magnetic field component) and Cotton-Mouton birefringence (due to the perpendicular magnetic field component) as they travel. These polarization and phase effects occur naturally during propagation through the magnetized underdense region.</p>
+            
+            <p>At the overdense edge, the microwaves encounter a plasma-frequency cutoff and are reflected, acting as a plasma mirror. This reflection returns the wave energy back into the underdense core, where it can propagate again, potentially undergoing additional passes through the system. The goal is to achieve multiple internal reflections, thereby recycling microwave energy within the magnetic bottle and increasing the effective interaction time and energy density inside the device.</p>
+            
+            <p>At laboratory scale, the primary objectives are to demonstrate:</p>
+            <ul class="list-disc pl-6">
+                <li>Formation of a stable plasma with a measurable radial density gradient.</li>
+                <li>Significant reduction in reflected microwave power once the plasma mirror engages (indicating energy is being retained within the system rather than lost on the first reflection).</li>
+                <li>Evidence of wave propagation and polarization effects consistent with Faraday rotation and Cotton-Mouton birefringence in the underdense core.</li>
+            </ul>
+            
+            <p>While true high-Q recirculation and precise measurement of multiple-pass energy retention are challenging at small scale, even a clear demonstration of reduced reflected power combined with a controlled density gradient would constitute a meaningful proof-of-concept for the underlying plasma-mirror recycling principle.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 6: Neon PoC Laboratory Model -->
+    <section id="section-6" class="max-w-screen-2xl mx-auto px-8 py-16 border-t section">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <span class="text-xs font-mono tracking-[3px] text-indigo-600">SECTION 06 / 13</span>
+                <h2 class="text-4xl font-semibold heading-font tracking-tight">Neon PoC Laboratory Model</h2>
+            </div>
+        </div>
+        
+        <div class="doc-text max-w-4xl">
+            <h3 class="font-semibold text-xl mb-4">Neon Plasma Mirror Proof-of-Concept – Full Laboratory Protocol</h3>
+            
+            <h4 class="font-semibold">Purpose</h4>
+            <p>This section provides a complete, practical protocol so that any competent plasma physics or microwave engineering laboratory can replicate the core plasma-mirror microwave recirculation effect. The goal is to demonstrate efficient microwave energy reflection and recirculation using a controlled radial plasma density gradient in a magnetic bottle configuration. A key objective is to establish and maintain a hollow density profile (lower density in the core, higher density at the edge) against natural cross-field transport.</p>
+            
+            <h4 class="font-semibold mt-6">Chamber Specifications</h4>
+            <ul class="list-disc pl-6">
+                <li>Cylindrical vacuum chamber with an inner diameter of approximately 60 cm for the gas/plasma volume</li>
+                <li>Total chamber length ~80–100 cm (including end caps)</li>
+                <li>Material: Non-magnetic stainless steel or high-purity quartz (quartz preferred for optical access)</li>
+                <li>High vacuum capability (base pressure ≤ 10⁻⁵ Torr)</li>
+                <li>Provision for auxiliary shell loops or edge coils to enable magnetic induction at the periphery</li>
+            </ul>
+            
+            <h4 class="font-semibold mt-6">Central Magnetic Dipole</h4>
+            <ul class="list-disc pl-6">
+                <li>Diameter approximately 10 cm</li>
+                <li>Capable of generating a central magnetic field of 0.5–2 Tesla (adjustable)</li>
+                <li>Mounted precisely at the geometric center of the chamber on a non-magnetic support</li>
+            </ul>
+            
+            <h4 class="font-semibold mt-6">Edge Plasma Creation and Control Systems</h4>
+            <ul class="list-disc pl-6">
+                <li>Auxiliary shell loops or edge coils capable of magnetic induction to preferentially create plasma at larger radii</li>
+                <li>Edge-localized helicon antennas positioned to reinforce high-density plasma near the chamber boundary</li>
+                <li>Gas delivery system capable of short, timed nitrogen or neon puffs (via solenoid valve) synchronized with edge sources</li>
+            </ul>
+            
+            <h4 class="font-semibold mt-6">Working Gas</h4>
+            <ul class="list-disc pl-6">
+                <li>High-purity neon (99.999% or better) as the primary working gas</li>
+                <li>Operating pressure range: 0.5–5 millitorr (start at ~1.5 millitorr)</li>
+                <li>Nitrogen or neon available for periodic seeding via short gas puffs</li>
+            </ul>
+            
+            <h4 class="font-semibold mt-6">Microwave System</h4>
+            <ul class="list-disc pl-6">
+                <li>Frequency: 2.45 GHz (standard ISM band magnetron or solid-state source)</li>
+                <li>Power: Start at 500–1000 W continuous wave, scalable to 5–10 kW</li>
+                <li>Coupling: Side-entry waveguide or antenna port entering horizontally</li>
+                <li>Critical: Continuous monitoring of forward and reflected power (primary indicator of recirculation)</li>
+            </ul>
+            
+            <!-- Lab Setup Image -->
+            <figure class="my-8">
+                <img src="images/neon-poc-experimental-setup.jpg" 
+                     alt="Laboratory-scale Neon Plasma Mirror Proof-of-Concept (~60 cm cylindrical chamber). Key elements include central dipole magnet, 2.45 GHz microwave injection, neon gas handling, and diagnostics for density profiling and power balance." 
+                     class="w-full max-w-3xl mx-auto rounded-3xl shadow-xl border border-slate-200">
+                <figcaption class="mt-4 text-center text-sm text-slate-600 max-w-2xl mx-auto italic">
+                    Laboratory-scale Neon Plasma Mirror Proof-of-Concept (~60 cm cylindrical chamber). Key elements include central dipole magnet, 2.45 GHz microwave injection, neon gas handling, and diagnostics for density profiling and power balance.
+                </figcaption>
+            </figure>
+            
+            <h4 class="font-semibold mt-6">Step-by-Step Operating Procedure</h4>
+            <ol class="list-decimal pl-6 space-y-1">
+                <li>Evacuate the chamber to base vacuum (≤ 10⁻⁵ Torr).</li>
+                <li>Introduce high-purity neon gas and stabilize pressure in the 0.5–5 millitorr range (start at ~1.5 millitorr).</li>
+                <li>Energize the central dipole to establish 0.8–1.5 T at the center.</li>
+                <li>Activate auxiliary shell loops / edge coils and edge-localized helicon antennas to begin building plasma density preferentially at the edge.</li>
+                <li>Apply microwave power starting at ~500 W and gradually ramp up while monitoring reflected power.</li>
+                <li>Introduce short, timed nitrogen or neon gas puffs synchronized with the edge sources to increase collisionality and help sharpen the density gradient.</li>
+                <li>Fine-tune gas pressure, microwave power, magnetic field, and nitrogen puff timing to establish a stable plasma with a clear radial density gradient (lower density near the center, higher density near the outer boundary).</li>
+                <li>Optimize for a significant drop in reflected microwave power (target: 40–80% reduction once the plasma mirror effect engages).</li>
+                <li>Record power balance, plasma luminosity, density profiles, and stability over time (aim for stable operation of at least 5–10 minutes).</li>
+            </ol>
+            
+            <h4 class="font-semibold mt-6">Expected Observations</h4>
+            <ul class="list-disc pl-6">
+                <li>Formation of a stable, brightly glowing plasma with visible radial density variation (hollow profile)</li>
+                <li>Significant reduction in reflected microwave power (typically 40–80% or better when optimized)</li>
+                <li>Higher central plasma energy density sustained with lower external microwave input than non-mirror configurations</li>
+                <li>Stable, repeatable operation once parameters are tuned</li>
+            </ul>
+            
+            <p class="mt-4 text-sm italic">Note: This protocol provides a solid, actionable starting point. Exact parameters will require experimental optimization based on your laboratory equipment. The combination of edge-localized plasma creation, helicon reinforcement, and controlled nitrogen seeding should enable demonstration of the basic plasma-mirror recirculation effect with standard plasma-lab equipment.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 6 (shifted) -->
+    <section id="section-6" class="max-w-screen-2xl mx-auto px-8 py-16 border-t bg-white section">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <span class="text-xs font-mono tracking-[3px] text-indigo-600">SECTION 07 / 13</span>
+                <h2 class="text-4xl font-semibold heading-font tracking-tight">Full Fusion Conditions PoC</h2>
+            </div>
+        </div>
+        
+        <div class="doc-text max-w-4xl">
+            <h3 class="font-semibold text-xl">Equipment (Resonance Core only – 30/60/90 cm)</h3>
+            <ul class="list-disc pl-6">
+                <li>Spherical vacuum shell with integrated cryostat jacket.</li>
+                <li>Superconducting coil set: 1 central levitated dipole coil + 8–12 shell loops (polar levitation + equatorial trim, push-pull wired for 6-DOF stability).</li>
+                <li>Cryocooler or liquid-helium feed for coil cooling.</li>
+                <li>Microwave drive: tunable RF source (start at 2.45 GHz or 10 GHz) + waveguide feed into the core.</li>
+            </ul>
+            
+            <h4 class="font-semibold mt-6">Diagnostics suite</h4>
+            <ul class="list-disc pl-6">
+                <li>Microwave interferometer / reflectometer (density profile + Q factor).</li>
+                <li>Langmuir probes or optical spectroscopy (n_e(r) and T_e).</li>
+                <li>B-dot probes (field mapping).</li>
+                <li>High-speed camera (plasma shape and gradient).</li>
+                <li>Polarization diagnostics (Faraday rotation angle + Cotton-Mouton ellipticity).</li>
+                <li>Power meters (input vs. reflected/circulating power).</li>
+            </ul>
+            
+            <!-- Levitated Dipole Configuration Image -->
+            <figure class="my-8 max-w-2xl mx-auto">
+                <img src="images/levitated-dipole-configuration.jpg" 
+                     alt="Levitated dipole magnetic bottle configuration for scaled Resonance Core embodiments. Central levitated dipole creates closed field lines; auxiliary coils provide stability. Microwave ports allow access while maintaining the engineered plasma density gradient." 
+                     class="w-full rounded-3xl shadow-xl border border-slate-200">
+                <figcaption class="mt-4 text-center text-sm text-slate-600 italic">
+                    Levitated dipole magnetic bottle configuration for scaled Resonance Core embodiments. 
+                    Central levitated dipole creates closed field lines; auxiliary coils provide stability. Microwave 
+                    ports allow access while maintaining the engineered plasma density gradient.
+                </figcaption>
+            </figure>
+            
+            <h4 class="font-semibold mt-6">Configuration (step-by-step)</h4>
+            <p>Assemble shell with 8–12 shell loops in the cryostat. Mount central dipole coil on temporary mechanical support. Evacuate to &lt;10⁻⁶ Torr. Cool coils to operating temperature. Ramp shell loops to levitate the central dipole. Introduce low-pressure working gas. Launch microwaves at low power into the underdense core. Tune edge density until the overdense layer reaches plasma-mirror cutoff. Verify the underdense-core to overdense-edge gradient (target L_n ≈ 1–2 cm). Increase RF power and observe polarization sculpting via Faraday rotation and Cotton-Mouton birefringence.</p>
+            
+            <h4 class="font-semibold mt-6">What we will be measuring</h4>
+            <ul class="list-disc pl-6">
+                <li>n_e(r) profile → confirm underdense core to overdense edge (plasma frequency cutoff ω_p ≈ 56.4146 √n_e rad/s)</li>
+                <li>Recirculation Q ≈ π / (1 – R_round-trip) from input vs. sustained cavity power</li>
+                <li>Levitation stability (jitter &lt;1 mm)</li>
+                <li>Faraday rotation angle and Cotton-Mouton birefringence</li>
+                <li>Microwave power balance (round-trip reflectivity R_rt ≥ 98.95 %)</li>
+            </ul>
+            
+            <p class="mt-4"><strong>Failure criteria:</strong> Central coil contacts shell or jitter &gt;2 mm, no stable overdense edge, measured Q too low, cryogenic failure, etc.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 7: FAQ 1 -->
+    <section id="section-7" class="max-w-screen-2xl mx-auto px-8 py-16 border-t section">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <span class="text-xs font-mono tracking-[3px] text-indigo-600">SECTION 08 / 13</span>
+                <h2 class="text-4xl font-semibold heading-font tracking-tight">FAQ 1: Microwave Polarization Management</h2>
+            </div>
+        </div>
+        
+        <!-- Overview Image moved to Section 7 -->
+        <div class="max-w-screen-2xl mx-auto px-8 py-8 bg-white">
+            <figure class="max-w-5xl mx-auto">
+                <img src="images/resonance-core-overview.jpg" 
+                     alt="Schematic of Resonance Core showing underdense plasma core, overdense mirror layers, and microwave recirculation paths" 
+                     class="w-full rounded-3xl shadow-2xl border border-slate-200">
+                <figcaption class="mt-4 text-center text-sm text-slate-600 max-w-3xl mx-auto italic">
+                    Resonance Core concept: Engineered radial plasma density gradient creates an internal 
+                    plasma mirror. Microwaves recirculate through the underdense core, reflecting at the overdense 
+                    edge layers.
+                </figcaption>
+            </figure>
+        </div>
+        
+        <div class="doc-text max-w-4xl">
+            <h3 class="font-semibold text-xl">Resonance Core – Microwave Polarization Management</h3>
+            
+            <p><strong>What we do with the microwaves:</strong><br>
+            We launch standard microwaves (typically 2.45 GHz or 10 GHz) into the underdense plasma core. As the waves travel through the plasma, the magnetic field sculpts their polarization geometry in two controlled ways so they reflect cleanly at the overdense plasma edge (the plasma mirror) instead of transmitting through or being absorbed.</p>
+            
+            <p>The reflection itself is caused by the well-known plasma cutoff (ω &lt; ω_p), already observed for decades in tokamak reflectometry and laboratory plasma mirror experiments.</p>
+            
+            <p class="mt-4">The two polarization effects we actively use are:</p>
+            <ul class="list-disc pl-6 mt-2">
+                <li><strong>Faraday rotation</strong> — rotates the polarization plane proportionally to the parallel magnetic field component.</li>
+                <li><strong>Cotton-Mouton birefringence</strong> — introduces a phase difference between the ordinary and extraordinary modes due to the perpendicular field component.</li>
+            </ul>
+            
+            <p class="mt-4">Together these effects allow us to control and optimize how the wave arrives at the plasma mirror boundary for maximum reflection efficiency.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 8 -->
+    <section id="section-8" class="max-w-screen-2xl mx-auto px-8 py-16 border-t bg-white section">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <span class="text-xs font-mono tracking-[3px] text-indigo-600">SECTION 09 / 13</span>
+                <h2 class="text-4xl font-semibold heading-font tracking-tight">FAQ 2: Magnetic Configuration and Shell-Loop Scaling</h2>
+            </div>
+        </div>
+        
+        <div class="doc-text max-w-4xl">
+            <h3 class="font-semibold text-xl">Magnetic Configuration and Shell-Loop Scaling in the Resonance Core</h3>
+            
+            <h4 class="font-semibold mt-6">1. Overall Magnetic Architecture</h4>
+            <p>The Resonance Core uses a levitated-dipole magnetic bottle:</p>
+            <ul class="list-disc pl-6">
+                <li>One central superconducting dipole coil (levitated and position-controlled in 6-DOF).</li>
+                <li>Multiple surface shell loops (superconducting coils embedded in or mounted on the thin graphene shell).</li>
+                <li>These loops work together with the central dipole to create the magnetic field that confines the plasma and shapes the critical underdense-core → overdense-edge density gradient.</li>
+            </ul>
+            
+            <h4 class="font-semibold mt-6">2. Shell-Loop Scaling with Reactor Size</h4>
+            <p>The number, size, and arrangement of the shell loops are not fixed — they are dictated by the diameter of the spherical reactor. As the sphere grows larger, more loops are added and their physical size increases to maintain the required field topology and stability.</p>
+            <ul class="list-disc pl-6">
+                <li>At lab/PoC scale (30–90 cm): 8–12 shell loops (polar levitation + equatorial trim).</li>
+                <li>At theoretical ~12 km asymptotic optimum: approximately 120 shell loops, arranged in a soccer-ball pattern (truncated icosahedron geometry).</li>
+            </ul>
+            
+            <h4 class="font-semibold mt-6">3. Magnetic Field Strength (B) Behavior</h4>
+            <p>As the reactor diameter increases, the magnetic field strength B decreases (following the scaling required by the coil-current relationship). Despite the weaker B, overall confinement performance, recirculation Q-factor, gradient stability, and microwave recycling efficiency all improve significantly.</p>
+            
+            <p class="mt-4">This improvement is one of the key reasons for the strong scaling behavior observed with increasing system size. Larger volume gives the plasma more room to form smoother, more stable density gradients, while the relative impact of the central dipole and edge regions decreases.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 9 -->
+    <section id="section-9" class="max-w-screen-2xl mx-auto px-8 py-16 border-t section">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <span class="text-xs font-mono tracking-[3px] text-indigo-600">SECTION 10 / 13</span>
+                <h2 class="text-4xl font-semibold heading-font tracking-tight">FAQ 3: Central Levitated Dipole Coil Volume Scaling</h2>
+            </div>
+        </div>
+        
+        <div class="doc-text max-w-4xl">
+            <h3 class="font-semibold text-xl">Central Levitated Dipole Coil Volume Scaling and Its Effect on Loss Budget</h3>
+            
+            <h4 class="font-semibold mt-6">1. Volume Fraction Across Scales</h4>
+            <ul class="list-disc pl-6">
+                <li>At lab/PoC scale (~10 cm diameter): The central dipole occupies approximately 17 % of the total internal volume.</li>
+                <li>At full scale (~12 km diameter sphere): The central dipole is only ~200 m in diameter and represents just 0.03 % of the total volume.</li>
+            </ul>
+            
+            <h4 class="font-semibold mt-6">2. Why This Matters — The “Loss Budget”</h4>
+            <p>In the small PoC the dipole takes up a large fraction of the available space. This creates several practical limitations and a significantly higher overall “loss budget” (scattering, absorption, gradient distortion, edge instabilities, and reduced Q-factor).</p>
+            
+            <p>At full scale the dipole becomes volumetrically negligible (0.03 %). Almost the entire interior volume is now available for the underdense-core plasma and the clean overdense-edge plasma mirror. This dramatically lowers every category of loss and enables smoother, more stable density gradients.</p>
+            
+            <h4 class="font-semibold mt-6">3. How This Drives the Asymptotic Scaling Law</h4>
+            <p>This volume-fraction improvement is one of the key geometric reasons the system’s performance improves exponentially (or asymptotically) as size increases toward the 12 km optimum. The same basic architecture works from the 60 cm PoC all the way to the 12 km optimal scale.</p>
+            
+            <p class="mt-4">The PoC has a noticeably higher loss budget because the dipole is still a large fraction of the machine; the full scale reactors essentially eliminate that penalty.</p>
+        </div>
+    </section>
+
+    <!-- NEW FAQ 2 -->
+    <section id="section-faq2" class="max-w-screen-2xl mx-auto px-8 py-16 border-t section">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <span class="text-xs font-mono tracking-[3px] text-indigo-600">SECTION 11 / 13</span>
+                <h2 class="text-4xl font-semibold heading-font tracking-tight">FAQ 4: Scaling Arguments and Expected Behavior at Larger Sizes</h2>
+            </div>
+        </div>
+        
+        <div class="doc-text max-w-4xl">
+            <p>The Resonance Core concept is designed to be inherently scalable. Many of the challenges observed at laboratory scale are expected to become less severe as the system size increases, while the core physics advantages are expected to strengthen.</p>
+            
+            <h4 class="font-semibold mt-6">At laboratory scale (30–90 cm):</h4>
+            <ul class="list-disc pl-6">
+                <li>Maintaining a clean hollow density profile is non-trivial due to cross-field transport.</li>
+                <li>Microwave recycling is expected to be modest, with the primary goal being demonstration of reduced reflected power and evidence of a controlled density gradient.</li>
+                <li>Engineering complexity around levitation, edge plasma sources, and diagnostics is relatively high compared to the plasma volume.</li>
+            </ul>
+            
+            <h4 class="font-semibold mt-6">At intermediate scales (several meters):</h4>
+            <ul class="list-disc pl-6">
+                <li>The ratio of plasma volume to surface area improves, reducing the relative impact of wall interactions.</li>
+                <li>While cross-field transport remains present, its relative impact on the global density profile decreases with increasing system size.</li>
+                <li>Microwave recirculation efficiency is expected to increase as the optical path length inside the underdense core grows and the plasma mirror becomes more effective.</li>
+                <li>Magnetic levitation of the central dipole becomes more practical and beneficial.</li>
+            </ul>
+            
+            <h4 class="font-semibold mt-6">At large scales (tens to hundreds of meters):</h4>
+            <ul class="list-disc pl-6">
+                <li>The relative volume occupied by the central dipole becomes very small, minimizing its impact on the overall loss budget and field uniformity.</li>
+                <li>The system can more closely approximate ideal magnetic bottle conditions with smooth radial density gradients.</li>
+                <li>Multiple-pass microwave recirculation is expected to become significantly more efficient.</li>
+                <li>The combination of edge plasma control methods has more physical space in which to operate effectively.</li>
+            </ul>
+            
+            <p>While many practical challenges remain, the fundamental physics of microwave recycling via engineered plasma density gradients is expected to improve with increasing system size.</p>
+        </div>
+    </section>
+
+    <!-- NEW FAQ 3 -->
+    <section id="section-faq3" class="max-w-screen-2xl mx-auto px-8 py-16 border-t bg-white section">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <span class="text-xs font-mono tracking-[3px] text-indigo-600">SECTION 12 / 13</span>
+                <h2 class="text-4xl font-semibold heading-font tracking-tight">FAQ 5: Magnetic Geometry and Levitation</h2>
+            </div>
+        </div>
+        
+        <div class="doc-text max-w-4xl">
+            <p>The Resonance Core concept is based on a levitated dipole magnetic configuration. A central superconducting coil (the dipole) is magnetically suspended inside the vacuum chamber, creating a dipole magnetic field that provides the primary confinement and field structure for the plasma.</p>
+            
+            <p>Surrounding the chamber are auxiliary shell coils (shell loops) that assist in levitation, field shaping, and edge plasma control.</p>
+            
+            <p>At laboratory scale, the central dipole may be magnetically levitated or mechanically supported. Full magnetic levitation becomes more relevant at larger scales.</p>
+            
+            <p>The combination of the central dipole and auxiliary shell coils creates a flexible magnetic geometry that can be adjusted to optimize conditions for edge plasma production and radial density gradient control.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 10: Project Vision -->
+    <section id="section-10" class="max-w-screen-2xl mx-auto px-8 py-16 border-t bg-white section">
+        <div class="flex items-center justify-between mb-6">
+            <div>
+                <span class="text-xs font-mono tracking-[3px] text-indigo-600">SECTION 13 / 13</span>
+                <h2 class="text-4xl font-semibold heading-font tracking-tight">Project Vision</h2>
+            </div>
+        </div>
+        
+        <div class="doc-text max-w-4xl">
+            <h3 class="font-semibold text-xl">Closing Note</h3>
+            
+            <p>The existing fusion research community has achieved remarkable results under extraordinarily difficult conditions. For decades, some of the brightest minds in plasma physics have worked to make fusion viable within the constraints of Earth’s gravity and conventional toroidal geometries. Their perseverance is commendable and deserves genuine respect.</p>
+            
+            <p class="mt-4">This Resonance Core architecture takes a fundamentally different approach — one that deliberately emulates the natural force balance found inside stars while removing the complicating effects of gravity. It is offered in the spirit of open science, with the hope that researchers who have spent their careers pushing against these limitations will now have a new and more intuitive path forward.</p>
+            
+            <p class="mt-4">The goal is not to replace existing efforts, but to provide an additional foundation that may allow those same talented minds to achieve even greater breakthroughs. Collaboration, validation, and the shared pursuit of clean, abundant energy are what matter most.</p>
+            
+            <h3 class="font-semibold text-xl mt-10">Next Steps</h3>
+            <p>Our team is seeking collaboration with qualified research institutions or laboratories interested in conducting the Neon Plasma Mirror PoC as an initial validation step. Funding, facilities, and technical support for these experiments are being sought.</p>
+            
+            <div class="mt-8 p-6 bg-slate-100 rounded-3xl">
+                <p class="font-medium">– Q1 Abundance LLC</p>
+                <p class="text-indigo-600">q1abundancellc@gmail.com</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t py-10">
+        <div class="max-w-screen-2xl mx-auto px-8 text-sm text-slate-500 flex flex-col md:flex-row justify-between items-center gap-y-4">
+            <div>
+                © Resonance Core Project • Exact document preserved • Open for collaboration
+            </div>
+            <div class="flex items-center gap-x-6">
+                <a href="mailto:q1abundancellc@gmail.com" class="hover:text-slate-700">Contact Q1 Abundance LLC</a>
+                <span class="hidden md:inline">•</span>
+                <span>Domain <span class="font-medium text-emerald-600">resonancecore.org</span> is available</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tailwind config
+        function initTailwind() {
+            // Already using CDN classes
+        }
+        
+        // Render all KaTeX equations
+        function renderMath() {
+            document.querySelectorAll('.math').forEach(el => {
+                try {
+                    katex.render(el.textContent, el, {
+                        throwOnError: false,
+                        displayMode: el.textContent.includes('≈') || el.textContent.length > 20
+                    });
+                } catch (e) {
+                    console.warn('KaTeX error on:', el.textContent);
+                }
+            });
+            
+            // Also auto-render any $$ or \( \) if present
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+        
+        // Simple active nav highlighting
+        function initNavHighlight() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (scrollY >= sectionTop - 150) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active', 'nav-active');
+                    if (link.getAttribute('href') === `#${current}`) {
+                        link.classList.add('active', 'nav-active');
+                    }
+                });
+            });
+        }
+        
+        function init() {
+            initTailwind();
+            renderMath();
+            initNavHighlight();
+            
+            console.log('%c[Resonance Core] Website ready. All 10 sections loaded with exact text and formatted equations.', 'color: #64748b');
+        }
+        
+        window.onload = init;
+    </script>
+</body>
+</html>
